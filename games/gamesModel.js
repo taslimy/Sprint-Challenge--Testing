@@ -9,7 +9,13 @@ module.exports = {
 };
 
 async function insert(game) {
-  return null;
+  return db("games")
+    .insert(game, "id")
+    .then(ids => {
+      return db("games")
+        .where({ id: ids[0] })
+        .first();
+    });
 }
 
 async function update(id, changes) {

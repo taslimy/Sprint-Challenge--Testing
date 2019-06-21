@@ -26,4 +26,51 @@ describe("server.js file", () => {
       expect(res.type).toBe("application/json");
     });
   });
+
+  describe("POST '/games'", () => {
+    it("should return 200 ok", async () => {
+      const game = {
+        title: "Dota 2",
+        genre: "MOBA",
+        releaseYear: 2013
+      };
+      const res = await request(server)
+        .post("/games")
+        .send(game);
+      expect(res.status).toEqual(201);
+    });
+
+    it("should be JSON", async () => {
+      const game = {
+        title: "Dota 2",
+        genre: "MOBA",
+        releaseYear: 2013
+      };
+      const res = await request(server)
+        .post("/games")
+        .send(game);
+      expect(res.type).toBe("application/json");
+    });
+
+    it("should return add game", async () => {
+      const game = { title: "Dota 2", genre: "MOBA", releaseYear: 2013 };
+      const res = await request(server)
+        .post("/games")
+        .send(game);
+      expect(res.body.game).toEqual({
+        title: "Dota 2",
+        genre: "MOBA",
+        id: 1,
+        releaseYear: 2013
+      });
+    });
+
+    it("should return status code 422", async () => {
+      const game = { title: "Dota 2" };
+      const res = await request(server)
+        .post("/games")
+        .send(game);
+      expect(res.status).toEqual(422);
+    });
+  });
 });
