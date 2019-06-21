@@ -21,7 +21,7 @@ function remove(id) {
 }
 
 function getAll() {
-  return null;
+  return db("games");
 }
 
 function findById(id) {
